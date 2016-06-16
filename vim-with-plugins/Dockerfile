@@ -1,7 +1,7 @@
 
 FROM haron/vim:latest
 
-MAINTAINER Oleg Khryptul <okreptul@yahoo.com> 
+MAINTAINER Tyler Hoyt <tyler.hoyt@kindlingapps.com>
 
 # Vim plugins
 

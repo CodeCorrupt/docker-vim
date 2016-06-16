@@ -1,7 +1,7 @@
 
 FROM ubuntu:latest
 
-MAINTAINER Oleg Khryptul <okreptul@yahoo.com> 
+MAINTAINER Tyler Hoyt <tyler.hoyt@kindlingapps.com> 
 
 # environment variables
 ENV DEBIAN_FRONTEND noninteractive
