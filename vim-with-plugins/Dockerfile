@@ -1,25 +1,35 @@
-
-FROM haron/vim:latest
+FROM codecorrupt/vim:7.4
 
 MAINTAINER Tyler Hoyt <tyler.hoyt@kindlingapps.com>
 
-# Vim plugins
+# This is needed to suppress warns from apt-get
+ENV DEBIAN_FRONTEND noninteractive
 
-# Sensible
-RUN git clone https://github.com/tpope/vim-sensible.git $HOME/.vim/bundle/vim-sensible && \
+# Go to root to apt-get
+USER root
 
-# Dockerfile syntax & snippet plugin
-    git clone https://github.com/ekalinin/Dockerfile.vim.git $HOME/.vim/bundle/Dockerfile && \
+# Install git
+RUN apt-get update && \
+    apt-get -y install \
+        git
 
-# Vim airline
-    git clone https://github.com/bling/vim-airline $HOME/.vim/bundle/vim-airline && \
-    echo "set laststatus=2"                                    >> $HOME/.vimrc && \
-    echo "let g:airline#extensions#tabline#enabled = 1"        >> $HOME/.vimrc && \
-    echo "let g:airline#extensions#tabline#left_sep = ' '"     >> $HOME/.vimrc && \
-    echo "let g:airline#extensions#tabline#left_alt_sep = '|'" >> $HOME/.vimrc && \
+# Install vim-plug
+COPY plug.vim /home/dev/.vim/autoload/plug.vim
 
-# CtrlP
-    git clone https://github.com/kien/ctrlp.vim.git $HOME/.vim/bundle/ctrlp.vim
+# Update the .vimrm
+COPY .vimrc /home/dev/.vimrc
 
-CMD vim
+# Change ownership
+RUN chown dev:dev .vimrc && \
+    chown -R dev:dev .vim/
 
+# Go back to the vim user
+USER dev
+
+# Install Vim Plugs
+RUN vim +PlugInstall +qall
+
+# Reset the frontend to default
+ENV DEBIAN_FRONTEND newt
+
+ENTRYPOINT ["vim"]
