@@ -1,14 +1,17 @@
-
-FROM ubuntu:latest
+FROM ubuntu:14.04
 
 MAINTAINER Tyler Hoyt <tyler.hoyt@kindlingapps.com> 
 
-# environment variables
+# This is needed to suppress warns from apt-get
 ENV DEBIAN_FRONTEND noninteractive
 
+# Install the required things
 RUN apt-get update && \
-    apt-get install -y vim git wget fontconfig
+    apt-get install -y \
+        vim=2:7.4* \
+    && rm -rf /var/lib/apt/lists/*
 
+# set up new user and locale
 RUN useradd dev && \
     echo "ALL            ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     cp /usr/share/zoneinfo/America/Los_Angeles /etc/localtime && \
@@ -20,22 +23,11 @@ WORKDIR /home/dev
 ENV HOME /home/dev
 ENV LC_ALL en_US.UTF-8
 
+# Must chown before setting USER
 RUN chown -R dev:dev $HOME
 USER dev
 
-# setup pathogen vim plugin manager
-RUN mkdir -p $HOME/.vim/autoload $HOME/.vim/bundle && \
-    wget -P $HOME/.vim/autoload https://tpo.pe/pathogen.vim && \
-    echo "execute pathogen#infect()" >> $HOME/.vimrc && \
-    echo "syntax on"                 >> $HOME/.vimrc && \
-    echo "filetype plugin indent on" >> $HOME/.vimrc && \
+# Set env back to normal
+ENV DEBIAN_FRONTEND newt
 
-# Powerline fonts
-    mkdir -p $HOME/.fonts $HOME/.config/fontconfig/conf.d && \
-    wget -P $HOME/.fonts                     https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
-    wget -P $HOME/.config/fontconfig/conf.d/ https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf && \
-    fc-cache -vf $HOME/.fonts/ && \
-    echo "set guifont=Droid\\ Sans\\ Mono\\ 10"
-# echo "set guifont=Liberation\\ Mono\\ for\\ Powerline\\ 10"
-
-CMD vim
+ENTRYPOINT ["vim"]
