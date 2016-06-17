@@ -14,7 +14,7 @@ RUN apt-get update && \
         git
 
 # Install vim-plug
-COPY plug.vim /home/dev/.vim/autoload/plug.vim
+ADD https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim /home/dev/.vim/autoload/plug.vim
 
 # Update the .vimrm
 COPY .vimrc /home/dev/.vimrc
