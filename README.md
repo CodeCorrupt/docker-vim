@@ -1,37 +1,19 @@
-docker-vim
+Vim {Docker}
 ==========
 
-vim/Dockerfile
---------------
+Docker image: [codecorrupt/vim](https://hub.docker.com/r/codecorrupt/vim/)
 
-Docker image: [haron/vim](https://registry.hub.docker.com/u/haron/vim/)
-
-Dockerfile with vim installed.
-Additionally [pathogen](https://github.com/tpope/vim-pathogen) plugin and [powerline fonts](https://github.com/Lokaltog/powerline-fonts) are installed.
-
-Command to run vim container:
-
-    sudo docker run -i -t --name my-vim -v ~/:/home/dev/src haron/vim
-
-vim-with-plugins/Dockerfile
----------------------------
-
-Docker image: [haron/vim-with-plugins](https://registry.hub.docker.com/u/haron/vim-with-plugins/)  
-Based on [haron/vim](https://registry.hub.docker.com/u/haron/vim/)
-
-Adds support for the several useful plugins:
+This is my Dockerfile with Vim 7.4 installed and my favorite suite of core plugins. These plugins are installed using vim-plug and you're welcome to take the docerfile and use your own prefered vimrc.
 
 1. [Sensible](https://github.com/tpope/vim-sensible)
-2. [Dockerfile](https://github.com/ekalinin/Dockerfile.vim)
-3. [Vim airline](https://github.com/bling/vim-airline)
-4. [CtrlP](https://github.com/kien/ctrlp.vim)
+2. [Vim airline](https://github.com/bling/vim-airline)
+3. [CtrlP](https://github.com/kien/ctrlp.vim)
 
-Command to run vim-with-plugins container:
+To run vim container:
 
-    sudo docker run -i -t --name my-vim-with-plugins -v ~/:/home/dev/src haron/vim-with-plugins
+    Add dvim to your path or copy to a file in your path (ie. /usr/local/bin)
 
-Dockerfile with own plugins
+Want to use your own plugs?
 ---------------------------
 
-See [vim-with-plugins Dockerfile](vim-with-plugins/Dockerfile) for example.
-
+See [the code](https://github.com/CodeCorrupt/docker-vim), clone, and hack.
