@@ -4,7 +4,7 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 
 " NERD tree will be loaded on the first invocation of NERDTreeToggle command
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 
 " Ctrl-p is a fuzzy search thingy
 Plug 'ctrlpvim/ctrlp.vim'
