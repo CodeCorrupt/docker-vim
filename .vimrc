@@ -21,4 +21,7 @@ Plug 'scrooloose/syntastic'
 " Git diff in the Vim gutter
 Plug 'airblade/vim-gitgutter'
 
+set number
+set nowrap
+
 call plug#end()
