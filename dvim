@@ -1,10 +1,23 @@
 #!/usr/bin/env sh
 
+# Exit if any subcommand returns non 0
 set -e
 
+# Check that docker is installed
 hash docker > /dev/null 2>&1 || {
   echo "Could not find Docker. Please install Docker first."
   exit 1
 }
 
-docker run --rm -it -v "$PWD:$PWD" -w "$PWD" vim $@
+# Ensure you're not using docker-machine or it won't work
+if [ ! -z "$DOCKER_HOST" ]; then
+  echo "WARNING: You can only use dvim on your local host";
+  return;
+fi;
+
+# Get the directory anf file path to mount inside docker
+rel=${@: -1}
+echo rel = $rel
+abs=`cd $(dirname "$rel"); pwd`
+echo abs = $abs
+docker run --rm -it -v "$abs:$abs" -w "$PWD" vim $@

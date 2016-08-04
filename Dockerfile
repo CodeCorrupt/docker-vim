@@ -16,14 +16,14 @@ RUN apt-get update && \
 ADD https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim /home/dev/.vim/autoload/plug.vim
 
 # Update the .vimrm
-COPY .vimrc /home/dev/.vimrc
+COPY vimrc /home/dev/.vimrc
 
 # set up new user and locale
 RUN useradd dev && \
     echo "ALL            ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     cp /usr/share/zoneinfo/America/Los_Angeles /etc/localtime && \
     dpkg-reconfigure locales && \
-    locale-gen en_US.UTF-8 && \
+      locale-gen en_US.UTF-8 && \
     /usr/sbin/update-locale LANG=en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
@@ -36,7 +36,7 @@ RUN chown -R dev:dev $HOME
 USER dev
 
 # Install Vim Plugs
-RUN vim +"source %" +"PlugInstall" +"qall"
+RUN vim + "source %" +"PlugInstall" +"qall"
 
 # Set env back to normal
 ENV DEBIAN_FRONTEND newt
