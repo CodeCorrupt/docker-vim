@@ -17,7 +17,6 @@ fi;
 
 # Get the directory anf file path to mount inside docker
 rel=${@: -1}
-echo rel = $rel
+echo Editing = $rel
 abs=`cd $(dirname "$rel"); pwd`
-echo abs = $abs
 docker run --rm -it -v "$abs:$abs" -w "$PWD" vim $@
